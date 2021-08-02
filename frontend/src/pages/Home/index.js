@@ -87,3 +87,14 @@ export default function Home() {
     </Container>
   );
 }
+
+// fetch('http://localhost:3000')
+//   .then((response) => {
+//     response.json()
+//       .then((resolve) => {
+//         console.log(resolve);
+//       });
+//   })
+//   .catch((error) => {
+//     console.log(error);
+//   });
