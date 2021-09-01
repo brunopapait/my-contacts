@@ -3,12 +3,14 @@ const CategoriesRepository = require('../repository/CategoriesRepository');
 
 class ContactController {
   async index(request, response) {
-  /**
-   * Listar todos os registros.
-   */
+    /**
+     * Listar todos os registros.
+     */
     const { orderBy } = request.query;
-
     const contacts = await ContactsRepository.findAll(orderBy);
+
+    console.log(contacts);
+
     return response.json(contacts);
   }
 

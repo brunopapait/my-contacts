@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+
 import {
   Container, InputSearchContainer, Header, ListContainer, Card
 } from './styles';
@@ -88,13 +89,26 @@ export default function Home() {
   );
 }
 
-// fetch('http://localhost:3000')
-//   .then((response) => {
-//     response.json()
-//       .then((resolve) => {
-//         console.log(resolve);
-//       });
-//   })
-//   .catch((error) => {
-//     console.log(error);
-//   });
+fetch('http://localhost:3001/contacts', {
+  method: 'DELETE',
+  headers: new Headers({
+    'X-App-ID': '123'
+  })
+})
+  .then((response) => {
+    console.log(response);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+
+// SOP -> Same Origin Police -> Politica de mesma origem
+// CORS -> Cross-Origin Resource Sharing -> Compartilhamento de recursos entre
+//                                          origens cruzadas
+// ORIGEM: (URL) -> protocolo://dominio:porta = http://localhost:3000
+
+//   Saída: http://localhost:3000
+// Destino: http://localhost:3000
+
+// PREFLIGHT -> Pré-voô
+// OPTIONS
