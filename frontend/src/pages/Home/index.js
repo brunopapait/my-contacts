@@ -1,12 +1,8 @@
 import { Link } from 'react-router-dom';
-
-import {
-  Container, InputSearchContainer, Header, ListContainer, Card
-} from './styles';
-
 import arrow from '../../assets/images/icons/arrow.svg';
 import edit from '../../assets/images/icons/edit.svg';
 import trash from '../../assets/images/icons/trash.svg';
+import { Card, Container, Header, InputSearchContainer, ListContainer } from './styles';
 
 export default function Home() {
   return (
@@ -89,14 +85,10 @@ export default function Home() {
   );
 }
 
-fetch('http://localhost:3001/contacts', {
-  method: 'DELETE',
-  headers: new Headers({
-    'X-App-ID': '123'
-  })
-})
-  .then((response) => {
-    console.log(response);
+fetch('http://localhost:3333/contacts')
+  .then(async (response) => {
+    const json = await response.json();
+    console.log(json);
   })
   .catch((error) => {
     console.log(error);
@@ -111,4 +103,4 @@ fetch('http://localhost:3001/contacts', {
 // Destino: http://localhost:3000
 
 // PREFLIGHT -> Pré-voô
-// OPTIONS
+// OPTIONS -> http://localhost:3333/contacts

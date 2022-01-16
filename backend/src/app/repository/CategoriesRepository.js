@@ -32,7 +32,7 @@ class CategoriesRepository {
     name,
   }) {
     const [row] = await db.query(`UPDATE categories cat
-    SET cat.name = $1
+    SET name = $1
     WHERE cat.id = $2
     RETURNING *`, [name, id]);
 

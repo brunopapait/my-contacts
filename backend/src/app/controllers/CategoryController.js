@@ -38,7 +38,6 @@ class CategoryController {
     const { id } = request.params;
 
     const category = await CategoriesRepository.findById(id);
-
     if (!category) {
       return response.status(404).json({ error: 'Category not found.' });
     }
