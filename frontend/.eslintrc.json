@@ -28,7 +28,12 @@
       }
     ],
     "react/react-in-jsx-scope": "off",
+    "react/jsx-one-expression-per-line": "off",
     "object-curly-newline": "off",
+    "no-unused-vars": "off",
+    "indent": "off",
+    "arrow-parens": "off",
+    "no-multiple-empty-lines": "off",
     "comma-dangle": [
       "error",
       {
