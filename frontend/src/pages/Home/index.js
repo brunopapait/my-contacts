@@ -4,21 +4,28 @@ import arrow from '../../assets/images/icons/arrow.svg';
 import edit from '../../assets/images/icons/edit.svg';
 import trash from '../../assets/images/icons/trash.svg';
 import formatPhone from '../../utils/formatPhone';
-import { Card, Container, Header, InputSearchContainer, ListContainer } from './styles';
+import { Card, Container, Header, InputSearchContainer, ListHeader } from './styles';
 
 
 export default function Home() {
   const [contacts, setContacts] = useState([]);
+  const [orderBy, setOrderBy] = useState('asc');
 
   useEffect(() => {
-    fetch('http://localhost:3333/contacts')
+    console.log(orderBy);
+    fetch(`http://localhost:3333/contacts?orderBy=${orderBy}`)
       .then(async (response) => {
         const json = await response.json();
         setContacts(json);
       })
       .catch((error) => {
+        console.log(error);
       });
-  }, []);
+  }, [orderBy]);
+
+  function handleToggleOrderBy() {
+    setOrderBy(prevState => prevState === 'asc' ? 'desc' : 'asc');
+  }
 
   return (
     <Container>
@@ -32,13 +39,12 @@ export default function Home() {
         <Link to="/new">Novo contato</Link>
       </Header>
 
-      <ListContainer>
-        <header>
-          <button type="button">
+      <ListHeader orderBy={orderBy}>
+          <button type="button" onClick={handleToggleOrderBy}>
             <span>Nome</span>
             <img src={arrow} alt="Arrow" />
           </button>
-        </header>
+      </ListHeader>
         {
           contacts.map(item => (
             <Card key={item.id}>
@@ -61,9 +67,6 @@ export default function Home() {
             </Card>
           ))
         }
-
-
-      </ListContainer>
     </Container>
   );
 }

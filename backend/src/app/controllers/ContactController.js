@@ -9,8 +9,6 @@ class ContactController {
     const { orderBy } = request.query;
     const contacts = await ContactsRepository.findAll(orderBy);
 
-    console.log(contacts);
-
     return response.json(contacts);
   }
 
