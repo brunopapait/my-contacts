@@ -28,6 +28,7 @@
       }
     ],
     "react/react-in-jsx-scope": "off",
+    "semi": "off",
     "react/jsx-one-expression-per-line": "off",
     "no-confusing-arrow": "off",
     "react/jsx-indent": "off",
