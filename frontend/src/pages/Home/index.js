@@ -19,34 +19,25 @@ export default function Home() {
   )), [contacts, searchTerm]);
 
   useEffect(() => {
-    setIsLoading(true);
-    fetch(`http://localhost:3333/contacts?orderBy=${orderBy}`)
-      .then(async (response) => {
+    async function loadContacts() {
+      try {
+        setIsLoading(true);
+
+      const response = await fetch(
+          `http://localhost:3333/contacts?orderBy=${orderBy}`
+          )
         await delay(400);
 
         const json = await response.json();
         setContacts(json);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.log(error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+      } finally {
+        setIsLoading(prevState => !prevState);
+      }
+    }
 
-      // fetch(`http://localhost:3333/contacts?orderBy=${orderBy}`)
-      // .then(async (response) => {
-      //   await delay(400);
-
-      //   const json = await response.json();
-      //   setContacts(json);
-      // })
-      // .catch((error) => {
-      //   console.log(error);
-      // })
-      // .finally(() => {
-      //   setIsLoading(false);
-      // });
+    loadContacts();
   }, [orderBy]);
 
   function handleToggleOrderBy() {
@@ -120,3 +111,7 @@ export default function Home() {
 
 // PREFLIGHT -> Pré-voô
 // OPTIONS -> http://localhost:3333/contacts
+
+// O código que eu tenho abaixo da promisse que eu quero usar o AWAIT,
+// depende dessa promisse ser executada ? Sim .. então use await
+// se a resposta for não .. use o encadeamento .then
