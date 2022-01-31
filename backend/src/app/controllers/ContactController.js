@@ -17,6 +17,7 @@ class ContactController {
      * Obter apenas UM registro
      */
     const { id } = request.params;
+
     const contact = await ContactsRepository.findById(id);
 
     if (!contact) {
@@ -35,6 +36,15 @@ class ContactController {
       name, email, phone, category_id,
     } = request.body;
 
+    if (!name) {
+      return response.status(400).json({ error: 'Name is required' });
+    }
+
+    const contactEmailExists = await ContactsRepository.findByEmail(email);
+    if (contactEmailExists) {
+      return response.status(400).json({ error: 'This e-mail is already been talken' });
+    }
+
     if (category_id) {
       const category = await CategoriesRepository.findById(category_id);
 
@@ -43,21 +53,11 @@ class ContactController {
       }
     }
 
-    const contactEmailExists = await ContactsRepository.findByEmail(email);
-
-    if (!name) {
-      return response.status(400).json({ error: 'Name is required' });
-    }
-
-    if (contactEmailExists) {
-      return response.status(400).json({ error: 'This e-mail is already been talken' });
-    }
-
     const contact = await ContactsRepository.create({
       name, email, phone, category_id,
     });
 
-    return response.json(contact);
+    return response.status(201).json(contact);
   }
 
   async update(request, response) {
@@ -102,7 +102,7 @@ class ContactController {
 
   async delete(request, response) {
     /**
-     * Remover UM registro
+     * Remover 1 registro
      */
     const { id } = request.params;
 
@@ -114,7 +114,7 @@ class ContactController {
 
     await ContactsRepository.delete(id);
 
-    return response.json(contact.id);
+    return response.status(200).json(contact.id);
   }
 }
 
