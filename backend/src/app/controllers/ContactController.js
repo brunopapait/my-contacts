@@ -2,20 +2,21 @@ const ContactsRepository = require('../repository/ContactsRepository');
 const CategoriesRepository = require('../repository/CategoriesRepository');
 
 class ContactController {
+
+  /**
+ * Listar todos os registros.
+ */
   async index(request, response) {
-    /**
-     * Listar todos os registros.
-     */
     const { orderBy } = request.query;
     const contacts = await ContactsRepository.findAll(orderBy);
 
     return response.json(contacts);
   }
-
+  /**
+   * Obter apenas UM registro
+   */
   async show(request, response) {
-    /**
-     * Obter apenas UM registro
-     */
+
     const { id } = request.params;
 
     const contact = await ContactsRepository.findById(id);
@@ -27,11 +28,10 @@ class ContactController {
     return response.json(contact);
   }
 
+  /**
+ * Criar novo registro
+ */
   async store(request, response) {
-    /**
-     * Criar novo registro
-     */
-
     const {
       name, email, phone, category_id,
     } = request.body;
@@ -60,10 +60,10 @@ class ContactController {
     return response.status(201).json(contact);
   }
 
+  /**
+ * Atualizar/Editar UM registro
+ */
   async update(request, response) {
-    /**
-     * Atualizar/Editar UM registro
-     */
     const { id } = request.params;
     const {
       name, email, phone, category_id,
@@ -100,10 +100,10 @@ class ContactController {
     return response.json(contact);
   }
 
+  /**
+ * Remover 1 registro
+ */
   async delete(request, response) {
-    /**
-     * Remover 1 registro
-     */
     const { id } = request.params;
 
     const contact = await ContactsRepository.findById(id);
