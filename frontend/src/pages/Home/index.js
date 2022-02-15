@@ -4,6 +4,7 @@ import arrow from '../../assets/images/icons/arrow.svg';
 import edit from '../../assets/images/icons/edit.svg';
 import trash from '../../assets/images/icons/trash.svg';
 import Loader from '../../components/Loader';
+import APIError from '../../errors/APIError';
 import ContactsService from '../../services/ContactsService';
 import formatPhone from '../../utils/formatPhone';
 import {
@@ -33,7 +34,9 @@ export default function Home() {
 
         setContacts(contactsList);
       } catch (error) {
+        console.log(error instanceof APIError);
         console.log(error);
+        console.log(error.response);
       } finally {
         setIsLoading((prevState) => !prevState);
       }
