@@ -1,5 +1,8 @@
+/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable no-nested-ternary */
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
+import emptyBox from '../../assets/images/empty-box.svg';
 import arrow from '../../assets/images/icons/arrow.svg';
 import edit from '../../assets/images/icons/edit.svg';
 import trash from '../../assets/images/icons/trash.svg';
@@ -10,12 +13,12 @@ import ContactsService from '../../services/ContactsService';
 import formatPhone from '../../utils/formatPhone';
 import {
   Card,
-  Container,
-  ErrorContainer,
+  Container, EmptyListContainer, ErrorContainer,
   Header,
   InputSearchContainer,
   ListHeader
 } from './styles';
+
 
 export default function Home() {
   const [contacts, setContacts] = useState([]);
@@ -33,6 +36,7 @@ export default function Home() {
       setIsLoading(true);
 
       const contactsList = await ContactsService.listContacts(orderBy);
+      // const contactsList = []; await ContactsService.listContacts(orderBy);
 
       setHasError(false);
       setContacts(contactsList);
@@ -64,17 +68,30 @@ export default function Home() {
     <Container>
       <Loader isLoading={isLoading} />
 
-      <InputSearchContainer>
-        <input
-          type='text'
-          placeholder='Pesquise pelo nome ..'
-          value={searchTerm}
-          onChange={handleChangeSearchTerm}
-        />
-      </InputSearchContainer>
+      {
+        (!hasError && contacts.length > 0) && (
+          <InputSearchContainer>
+            <input
+              type='text'
+              placeholder='Pesquise pelo nome ..'
+              value={searchTerm}
+              onChange={handleChangeSearchTerm}
+            />
+          </InputSearchContainer>
+        )
+      }
 
-      <Header hasError={hasError}>
-        {!hasError && (
+      <Header
+        justifyContent={
+          hasError
+            ? 'flex-end'
+            : (contacts.length > 0
+              ? 'space-between'
+              : 'center'
+            )
+        }
+      >
+        {(!hasError && contacts.length > 0) && (
           <strong>
             {filteredContacts.length}{' '}
             {filteredContacts.length === 1 ? 'contato' : 'contatos'}
@@ -97,6 +114,16 @@ export default function Home() {
       {
         !hasError && (
           <>
+            {(contacts.length === 0 && !isLoading) && (
+              <EmptyListContainer>
+                <img src={emptyBox} alt="Empty box" />
+                <p>
+                  Você ainda não tem nenhum contato cadastrado!
+                  Clique no botão <strong>”Novo contato”</strong>
+                  à cima para cadastrar o seu primeiro!
+                </p>
+              </EmptyListContainer>
+            )}
             {
               filteredContacts.length > 0 && (
                 <ListHeader orderBy={orderBy}>
