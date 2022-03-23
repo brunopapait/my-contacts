@@ -50,6 +50,7 @@
     "react-hooks/exhaustive-deps": "warn",
     "class-methods-use-this": "off",
     "jsx-quotes": "off",
-    "no-debugger": "off"
+    "no-debugger": "off",
+    "no-empty": ["error", { "allowEmptyCatch": true }]
   }
 }
