@@ -20,7 +20,7 @@ export default styled.button`
     background: ${({ theme }) => theme.colors.primary.dark};
   }
 
-  &:[disabled] {
+  &:disabled {
     background: #CCC;
     cursor: default;
   }
