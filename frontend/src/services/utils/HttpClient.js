@@ -1,39 +1,47 @@
 import APIError from '../../errors/APIError';
-import delay from '../../utils/delay';
 
 class HttpClient {
   constructor(baseUrl) {
     this.baseUrl = baseUrl;
   }
 
-  async get(path) {
-    const response = await fetch(`${this.baseUrl}${path}`);
-    await delay(400);
-
-    const contentType = response.headers.get('Content-Type');
-
-    let body = null;
-    if (contentType.includes('application/json')) {
-      body = await response.json();
-    }
-
-    if (response.ok) {
-      return body;
-    }
-
-    // Optional chaining
-    throw new APIError(response, body);
+  get(path, options) {
+    return this.makeRequest(path, {
+      method: 'GET',
+      headers: options?.headers
+    })
   }
 
-  async post(path, body) {
-    await delay(400);
-    const headers = new Headers({
-      'Content-Type': 'application/json'
-    });
+  post(path, options) {
+    return this.makeRequest(
+      path,
+      {
+        method: 'POST',
+        body: options?.body,
+        headers: options?.headers
+      }
+    )
+  }
+
+  async makeRequest(path, options) {
+    const headers = new Headers();
+    if (options.body) {
+      headers.append('Content-Type', 'application/json');
+    }
+
+    if (options.headers) {
+      // Object.keys(options.headers).forEach(name => {
+      //   headers.append(name, options.headers[name]);
+      // });
+
+      Object.entries(options.headers).forEach(([name, value]) => {
+        headers.append(name, value);
+      })
+    }
 
     const response = await fetch(`${this.baseUrl}${path}`, {
-      method: 'POST',
-      body: JSON.stringify(body),
+      method: options.method,
+      body: JSON.stringify(options.body),
       headers
     });
 
@@ -48,7 +56,6 @@ class HttpClient {
       return responseBody;
     }
 
-    // Optional chaining
     throw new APIError(response, responseBody);
   }
 }

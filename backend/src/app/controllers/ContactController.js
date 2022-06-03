@@ -2,7 +2,6 @@ const ContactsRepository = require('../repository/ContactsRepository');
 const CategoriesRepository = require('../repository/CategoriesRepository');
 
 class ContactController {
-
   /**
  * Listar todos os registros.
  */
@@ -12,11 +11,11 @@ class ContactController {
 
     return response.json(contacts);
   }
+
   /**
    * Obter apenas UM registro
    */
   async show(request, response) {
-
     const { id } = request.params;
 
     const contact = await ContactsRepository.findById(id);
@@ -35,6 +34,8 @@ class ContactController {
     const {
       name, email, phone, category_id,
     } = request.body;
+
+    console.log(request.body);
 
     if (!name) {
       return response.status(400).json({ error: 'Name is required' });
@@ -61,7 +62,7 @@ class ContactController {
   }
 
   /**
- * Atualizar/Editar UM registro
+ * Atualizar/Editar 1 registro
  */
   async update(request, response) {
     const { id } = request.params;
