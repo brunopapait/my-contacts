@@ -11,20 +11,17 @@ class CategoriesRepository {
     name,
   }) {
     const [row] = await db.query(`INSERT INTO categories (name) VALUES ($1)
-    RETURNING *`,
-    [name]);
+    RETURNING *`, [name]);
     return row;
   }
 
   async delete(id) {
     const deleteOp = await db.query('DELETE FROM categories cat WHERE cat.id = $1', [id]);
-
     return deleteOp;
   }
 
   async findById(id) {
     const [row] = await db.query('SELECT * FROM categories cat WHERE cat.id = $1', [id]);
-
     return row;
   }
 
