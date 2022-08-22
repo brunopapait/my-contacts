@@ -1,0 +1,10 @@
+import styled from 'styled-components';
+
+export const Container = styled.div`
+  position: fixed;
+  bottom: 48px;
+  left: 50%;
+  z-index: 2;
+  background-color: red;
+  transform: translateX(-50%);
+`;
