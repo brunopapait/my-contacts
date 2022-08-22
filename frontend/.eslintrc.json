@@ -51,6 +51,7 @@
     "class-methods-use-this": "off",
     "jsx-quotes": "off",
     "no-debugger": "off",
+    "no-console": "off",
     "no-empty": ["error", { "allowEmptyCatch": true }]
   }
 }
