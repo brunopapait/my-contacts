@@ -5,6 +5,5 @@ export const Container = styled.div`
   bottom: 48px;
   left: 50%;
   z-index: 2;
-  background-color: red;
   transform: translateX(-50%);
 `;
