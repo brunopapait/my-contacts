@@ -6,7 +6,7 @@ import xCheckIcon from '../../../assets/images/icons/check-circle.svg';
 
 export default function ToastMessage({ text, type }) {
   return (
-    <Container>
+    <Container type={type}>
       {type === 'danger' && <img src={xCircleIcon} alt="X" />}
       {type === 'success' && <img src={xCheckIcon} alt="Check" />}
       <strong>{text}</strong>
