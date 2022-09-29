@@ -13,6 +13,7 @@ import Loader from '../../components/Loader';
 import ContactsService from '../../services/ContactsService';
 import formatPhone from '../../utils/formatPhone';
 import Modal from '../../components/Modal';
+import toast from '../../utils/toast';
 import {
   Card,
   Container, EmptyListContainer, ErrorContainer,
@@ -31,6 +32,7 @@ export default function Home() {
   const [hasError, setHasError] = useState(false);
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [contactBeingDeleted, setContactBeingDeleted] = useState(null);
+  const [isLoadingDelete, setIsLoadingDelete] = useState(false);
 
   const filteredContacts = useMemo(() => contacts.filter((contact) => (
     contact.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -79,15 +81,28 @@ export default function Home() {
   }
 
   async function handleConfirmDeleteContact() {
-    console.log(contactBeingDeleted);
+    try {
+      setIsLoadingDelete(true);
+      await ContactsService.deleteContact(contactBeingDeleted.id);
+
+      setContacts(prevState => prevState.filter(contact => contact.id !== contactBeingDeleted.id));
+      handleCloseDeleteModal();
+
+      toast({ type: 'success', text: 'Contato deletado com sucesso!' });
+    } catch (error) {
+      toast({ type: 'danger', text: 'Ocorreu um erro ao deletar o contato!' });
+    } finally {
+      setIsLoadingDelete(false);
+    }
   }
 
   return (
     <Container>
       <Loader isLoading={isLoading} />
       <Modal
-        danger
         visible={isDeleteModalVisible}
+        isLoading={isLoadingDelete}
+        danger
         title={`Tem certeza que deseja remover o contato "${contactBeingDeleted?.name}"`}
         confirmLabel='Deletar'
         onCancel={handleCloseDeleteModal}
