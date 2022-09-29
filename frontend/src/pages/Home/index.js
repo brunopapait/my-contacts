@@ -12,6 +12,7 @@ import Button from '../../components/Button';
 import Loader from '../../components/Loader';
 import ContactsService from '../../services/ContactsService';
 import formatPhone from '../../utils/formatPhone';
+import Modal from '../../components/Modal';
 import {
   Card,
   Container, EmptyListContainer, ErrorContainer,
@@ -69,7 +70,15 @@ export default function Home() {
   return (
     <Container>
       <Loader isLoading={isLoading} />
-
+      <Modal
+        danger
+        title='Tem certeza que deseja remover o contato "Bruno Henrique Papait"'
+        confirmLabel='Deletar'
+        onCancel={() => alert('Cancelou')}
+        onConfirm={() => alert('Confirmou')}
+      >
+        <p>Araruna</p>
+      </Modal>
       {
         (!hasError && contacts.length > 0) && (
           <InputSearchContainer>
