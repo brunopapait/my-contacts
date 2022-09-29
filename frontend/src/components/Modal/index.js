@@ -5,15 +5,18 @@ import Button from '../Button';
 
 import { Overlay, Container, Footer } from './styles';
 
-export default function Modal({ danger,
+export default function Modal({
+  visible,
+  danger,
   title,
   cancelLabel,
   confirmLabel,
   onCancel,
   onConfirm,
   children }) {
-  console.log(onCancel);
-  console.log(onConfirm);
+  if (!visible) {
+    return null;
+  }
 
   return ReactDOM.createPortal(
     <Overlay>
@@ -48,6 +51,7 @@ export default function Modal({ danger,
 
 Modal.propTypes = {
   danger: PropTypes.bool,
+  visible: PropTypes.bool.isRequired,
   title: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
   cancelLabel: PropTypes.string,
