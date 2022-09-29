@@ -30,6 +30,13 @@ const ContactForm = forwardRef(({ buttonLabel, onSubmit }, ref) => {
       setEmail(contact.email ?? '');
       setPhone(formatPhone(contact.phone ?? ''));
       setCategoryId(contact.category_id ?? '');
+    },
+
+    resetFields: () => {
+      setName('');
+      setEmail('');
+      setPhone('');
+      setCategoryId('');
     }
   }
   ), []);
@@ -139,11 +146,6 @@ const ContactForm = forwardRef(({ buttonLabel, onSubmit }, ref) => {
     </Form>
   );
 });
-
-// eslint-disable-next-line react/prop-types
-// export default function ContactForm() {
-
-// }
 
 ContactForm.propTypes = {
   buttonLabel: PropTypes.string.isRequired,
