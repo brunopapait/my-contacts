@@ -20,7 +20,6 @@ const ContactForm = forwardRef(({ buttonLabel, onSubmit }, ref) => {
   const [isLoadingCategories, setIsLoadingCategories] = useSafeAsyncState(true);
   const [isSubmiting, setIsSubmiting] = useState(false);
 
-
   const { setError, removeError, getErrorMessageByFieldName, errors } = useErrors();
 
   const isFormValid = (name && errors.length === 0);
@@ -46,7 +45,6 @@ const ContactForm = forwardRef(({ buttonLabel, onSubmit }, ref) => {
     async function loadCategories() {
       try {
         const categoriesList = await CategoriesService.listCategories();
-
         setCategories(categoriesList)
       } catch { } finally {
         setIsLoadingCategories(false);
