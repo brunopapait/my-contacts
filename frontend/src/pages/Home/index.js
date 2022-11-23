@@ -43,7 +43,6 @@ export default function Home() {
       setIsLoading(true);
 
       const contactsList = await ContactsService.listContacts(orderBy);
-      // const contactsList = []; await ContactsService.listContacts(orderBy);
 
       setHasError(false);
       setContacts(contactsList);
@@ -95,6 +94,8 @@ export default function Home() {
       setIsLoadingDelete(false);
     }
   }
+
+  console.log(contacts);
 
   return (
     <Container>
@@ -195,7 +196,7 @@ export default function Home() {
                 <div className='info'>
                   <div className='contact-name'>
                     <strong>{item.name}</strong>
-                    {item.category_name && <small>{item.category_name}</small>}
+                    {item.category.name && <small>{item.category.name}</small>}
                   </div>
                   <span>{item.email}</span>
                   <span>{formatPhone(item.phone)}</span>
