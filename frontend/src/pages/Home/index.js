@@ -1,24 +1,14 @@
-import { Link } from 'react-router-dom';
-import emptyBox from '../../assets/images/empty-box.svg';
-import arrow from '../../assets/images/icons/arrow.svg';
-import edit from '../../assets/images/icons/edit.svg';
-import trash from '../../assets/images/icons/trash.svg';
-import magnifierQuestion from '../../assets/images/magnifier-question.svg';
-import sad from '../../assets/images/sad.svg';
-import Button from '../../components/Button';
+
 import Loader from '../../components/Loader';
-import formatPhone from '../../utils/formatPhone';
-import Modal from '../../components/Modal';
 import useHome from './useHome';
-import {
-  Card,
-  Container, EmptyListContainer, ErrorContainer,
-  ListHeader,
-  SearchNotFoundContainer
-} from './styles';
+import { Container } from './styles';
 import InputSearch from './components/InputSearch';
 import { Header } from './components/Header';
-
+import { ErrorStatus } from './components/ErrorStatus';
+import { EmptyList } from './components/EmptyList';
+import { SearchNotFound } from './components/SearchNotFound';
+import { ContactsList } from './components/ContactsList';
+import Modal from '../../components/Modal';
 
 export default function Home() {
   const {
@@ -57,89 +47,47 @@ export default function Home() {
       />
 
       {hasError && (
-        <ErrorContainer>
-          <img src={sad} alt="sad" />
-          <div className="details">
-            <strong>Ocorreu um erro ao obter seus contatos!</strong>
-            <Button type="button" onClick={handleTryAgain}>
-              Tentar novamente
-            </Button>
-          </div>
-        </ErrorContainer>
+        <ErrorStatus
+          onTryAgain={handleTryAgain}
+        />
       )}
 
       {
         !hasError && (
           <>
             {(contacts.length === 0 && !isLoading) && (
-              <EmptyListContainer>
-                <img src={emptyBox} alt="Empty box" />
-                <p>
-                  Você ainda não tem nenhum contato cadastrado!
-                  Clique no botão <strong>”Novo contato”</strong>
-                  à cima para cadastrar o seu primeiro!
-                </p>
-              </EmptyListContainer>
+              <EmptyList />
             )}
 
             {
               (contacts.length > 0 && filteredContacts.length === 0) && (
-                <SearchNotFoundContainer>
-                  <img src={magnifierQuestion} alt="Magnifier question" />
-                  <span>
-                    Nenhum resultado foi encontrado para <strong>{searchTerm}</strong>
-                  </span>
-                </SearchNotFoundContainer>
+                <SearchNotFound
+                  value={searchTerm}
+                />
               )
             }
+            <ContactsList
+              filteredContacts={filteredContacts}
+              orderBy={orderBy}
+              onToggleOrderBy={handleToggleOrderBy}
+              isDeleteModalVisible={isDeleteModalVisible}
+              onDeleteContact={handleDeleteContact}
+            />
 
-            {
-              filteredContacts.length > 0 && (
-                <ListHeader orderBy={orderBy}>
-                  <button type='button' onClick={handleToggleOrderBy}>
-                    <span>Nome</span>
-                    <img src={arrow} alt='Arrow' />
-                  </button>
-                </ListHeader>
-              )
-            }
-
-            {filteredContacts.map((item) => (
-              <Card key={item.id}>
-                <div className='info'>
-                  <div className='contact-name'>
-                    <strong>{item.name}</strong>
-                    {item.category.name && <small>{item.category.name}</small>}
-                  </div>
-                  <span>{item.email}</span>
-                  <span>{formatPhone(item.phone)}</span>
-                </div>
-                <div className='actions'>
-                  <Link to={`/edit/${item.id}`}>
-                    <img src={edit} alt='Editar' />
-                  </Link>
-                  <button type='button' onClick={() => handleDeleteContact(item)}>
-                    <img src={trash} alt='Deletar' />
-                  </button>
-                </div>
-              </Card>
-            ))}
+            <Modal
+              visible={isDeleteModalVisible}
+              isLoading={isLoadingDelete}
+              danger
+              title={`Tem certeza que deseja remover o contato "${contactBeingDeleted?.name}"`}
+              confirmLabel='Deletar'
+              onCancel={handleCloseDeleteModal}
+              onConfirm={handleConfirmDeleteContact}
+            >
+              <p>Esta ação não poderá ser desfeita!</p>
+            </Modal>
           </>
         )
       }
-
-      <Modal
-        visible={isDeleteModalVisible}
-        isLoading={isLoadingDelete}
-        danger
-        title={`Tem certeza que deseja remover o contato "${contactBeingDeleted?.name}"`}
-        confirmLabel='Deletar'
-        onCancel={handleCloseDeleteModal}
-        onConfirm={handleConfirmDeleteContact}
-      >
-        <p>Esta ação não poderá ser desfeita!</p>
-      </Modal>
-
     </Container>
   );
 }
