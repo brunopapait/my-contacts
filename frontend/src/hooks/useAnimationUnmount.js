@@ -4,8 +4,6 @@ export default function useAnimationUnmount(visible) {
   const [shouldRender, setShouldRender] = useState(visible);
   const animatedElementRef = useRef(null);
 
-  console.log(visible);
-
   useEffect(() => {
     if (visible) {
       setShouldRender(true);

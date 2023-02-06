@@ -20,7 +20,6 @@ export default function useContactForm(onSubmit, ref) {
 
   useImperativeHandle(ref, () => ({
     setFieldsValue: (contact) => {
-      console.log(contact);
       setName(contact.name ?? '');
       setEmail(contact.email ?? '');
       setPhone(formatPhone(contact.phone ?? ''));
