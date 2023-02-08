@@ -1,4 +1,4 @@
-import { useEffect, memo } from 'react';
+import { useEffect, memo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Container } from './styles';
 import xCircleIcon from '../../../assets/images/icons/x-circle.svg';
@@ -12,9 +12,9 @@ function ToastMessage({ message, onRemoveMessage, isLeaving, animatedRef }) {
     return () => clearTimeout(timeoutId);
   }, [onRemoveMessage, message.id, message.duration]);
 
-  function handleRemoveToast() {
+  const handleRemoveToast = useCallback(() => {
     onRemoveMessage(message.id);
-  }
+  }, [message.id, onRemoveMessage]);
 
   return (
     <Container
