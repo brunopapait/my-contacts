@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { memo } from 'react';
 import editImage from '../../../../assets/images/icons/edit.svg';
 import arrowImage from '../../../../assets/images/icons/arrow.svg';
 import trashImage from '../../../../assets/images/icons/trash.svg';
@@ -7,7 +8,7 @@ import formatPhone from '../../../../utils/formatPhone';
 
 import { Card, ListHeader } from './styles';
 
-export function ContactsList({
+function ContactsList({
   filteredContacts,
   orderBy,
   onToggleOrderBy,
@@ -49,6 +50,8 @@ export function ContactsList({
     </>
   )
 }
+
+export default memo(ContactsList);
 
 ContactsList.propTypes = {
   filteredContacts: PropTypes.arrayOf(PropTypes.shape({

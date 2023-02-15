@@ -4,7 +4,6 @@ import { Container } from './styles';
 import xCircleIcon from '../../../assets/images/icons/x-circle.svg';
 import xCheckIcon from '../../../assets/images/icons/check-circle.svg';
 
-
 function ToastMessage({ message, onRemoveMessage, isLeaving, animatedRef }) {
   useEffect(() => {
     const timeoutId = setTimeout(() => onRemoveMessage(message.id), message.duration || 7000);

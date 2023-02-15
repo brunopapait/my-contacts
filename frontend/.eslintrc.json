@@ -30,6 +30,7 @@
       }
     ],
     "react/react-in-jsx-scope": "off",
+    "react/require-default-props": "off",
     "semi": "off",
     "react/jsx-one-expression-per-line": "off",
     "no-confusing-arrow": "off",
@@ -52,6 +53,11 @@
     "jsx-quotes": "off",
     "no-debugger": "off",
     "no-console": "off",
-    "no-empty": ["error", { "allowEmptyCatch": true }]
+    "no-empty": [
+      "error",
+      {
+        "allowEmptyCatch": true
+      }
+    ]
   }
 }

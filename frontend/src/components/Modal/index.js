@@ -8,11 +8,11 @@ import useAnimationUnmount from '../../hooks/useAnimationUnmount';
 
 export default function Modal({
   visible,
-  isLoading,
-  danger,
+  isLoading = false,
+  danger = false,
   title,
-  cancelLabel,
-  confirmLabel,
+  cancelLabel = 'Cancelar',
+  confirmLabel = 'Confirmar',
   onCancel,
   onConfirm,
   children }) {
@@ -66,11 +66,4 @@ Modal.propTypes = {
   confirmLabel: PropTypes.string,
   onConfirm: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired
-};
-
-Modal.defaultProps = {
-  isLoading: false,
-  danger: false,
-  cancelLabel: 'Cancelar',
-  confirmLabel: 'Confirmar'
 };

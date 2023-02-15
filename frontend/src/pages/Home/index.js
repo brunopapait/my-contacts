@@ -7,7 +7,7 @@ import { Header } from './components/Header';
 import { ErrorStatus } from './components/ErrorStatus';
 import { EmptyList } from './components/EmptyList';
 import { SearchNotFound } from './components/SearchNotFound';
-import { ContactsList } from './components/ContactsList';
+import ContactsList from './components/ContactsList';
 import Modal from '../../components/Modal';
 
 export default function Home() {
@@ -60,8 +60,8 @@ export default function Home() {
             <ContactsList
               filteredContacts={filteredContacts}
               orderBy={orderBy}
-              onToggleOrderBy={handleToggleOrderBy}
               isDeleteModalVisible={isDeleteModalVisible}
+              onToggleOrderBy={handleToggleOrderBy}
               onDeleteContact={handleDeleteContact}
             />
 
